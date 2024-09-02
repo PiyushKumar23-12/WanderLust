@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% layout("/layouts/boilerplate") %>
+  </head>
+  <body>
+    <div class="row">
+        <div class="alert alert-danger col-6 offset-3" role="alert">
+            <!-- <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg> -->
+            <div>
+                <h4 class="alert-heading"><%= err.message %></h4>
+                <!-- <p><%= err.stack %></p> -->
+            </div>
+          </div>
+    </div>
+  </body>
+</html>
