@@ -22,6 +22,7 @@ Various features of WANDERLUST
 4)Login/Signup:Passport authentication and authorization.Usage of hashing and salting for data security.
 
 5)Server/Client Schema Validation
+
 Explore WANDERLUST! Share your thoughts.☺️ ☺️
 
 
