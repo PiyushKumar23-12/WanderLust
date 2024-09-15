@@ -4,37 +4,245 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WanderLust</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-ENjdO4Dr2bkBIFxQpeoNyWGzQ4YfG9y5sAgcRnt76F5vq6VgqIcaz+7rqkR8RQdG"
+      crossorigin="anonymous"
+    />
   </head>
-  <% layout("/layouts/boilerplate") %> 
+  <% layout("/layouts/boilerplate") %>
+  <style>
+    #filters {
+      margin-top: 2rem;
+    }
+    .filter {
+      text-align: center;
+      margin-bottom: 2rem;
+      opacity: 0.7;
+    }
+    .filter:hover {
+      opacity: 1;
+      cursor: pointer;
+    }
+    .filter p {
+      font-size: 0.8rem;
+    }
+    .tax-info {
+      display: none;
+    }
+    .tax-toggle {
+      border: 1px solid black;
+      border-radius: 1rem;
+      height: 3.25rem;
+      width: 300px;
+      padding: 1rem;
+      margin-left: 2rem;
+    }
+    .text-filter {
+      cursor: pointer;
+      background: lightcoral;
+      margin-top: 10px;
+    }
+    .listing-link {
+      display: block;
+    }
+
+    .listing-link > * {
+      width: 100%;
+      max-width: 100%;
+    }
+    .card {
+      width: 100%;
+    }
+  </style>
   <body>
-    
-    <h2>All Listings</h2>
-    <!-- <form method="GET" action="/listings/new" >
-        <button>Create New Listing</button>
-    </form> -->
-    <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-1">
+    <div class="container">
+      <!-- Collapse Button for Small Devices -->
+      <button
+        class="btn text-filter d-block d-sm-none bg-body-dark"
+        type="button"
+        aria-expanded="false"
+        aria-controls="filterCollapse"
+        id="filterToggle"
+      >
+        Filters
+      </button>
+
+      <!-- Collapsible Filters for Small Devices -->
+      <div id="filterCollapse" class="collapse d-sm-block">
+        <div class="row" id="filters">
+          <div class="filter col-6 col-sm-3 col-lg-2">
+            <div><i class="fa-solid fa-bed"></i></div>
+            <p>Lodge</p>
+          </div>
+          <div class="filter col-6 col-sm-3 col-lg-2">
+            <div><i class="fa-solid fa-umbrella-beach"></i></div>
+            <p>Beach</p>
+          </div>
+          <div class="filter col-6 col-sm-3 col-lg-2">
+            <div><i class="fa-solid fa-city"></i></div>
+            <p>Villas</p>
+          </div>
+          <div class="filter col-6 col-sm-3 col-lg-2">
+            <div><i class="fa-solid fa-person-swimming"></i></div>
+            <p>Pools</p>
+          </div>
+          <div class="filter col-6 col-sm-3 col-lg-2">
+            <div><i class="fa-solid fa-hotel"></i></div>
+            <p>Apartment</p>
+          </div>
+          <div class="filter col-6 col-sm-3 col-lg-2">
+            <div><i class="fa-solid fa-sailboat"></i></div>
+            <p>Boats</p>
+          </div>
+          <div class="tax-toggle col-12 col-lg-12 mt-3">
+            <div class="form-check-reverse form-switch">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                id="flexSwitchCheckDefault"
+              />
+              <label class="form-check-label" for="flexSwitchCheckDefault">
+                Display total after taxes
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row grid grid-cols-4 gap-4 mt-3 all-listings">
       <% for(let listing of allListings) { %>
       <a href="/listings/<%= listing._id %>" class="listing-link">
-        <div class="card col listing-card" >
-          <img
-            src="<%= listing.image %>"
-            class="card-img-top"
-            alt="listing_image"
-            style="height: 20rem"
-          />
-          <div class="card-img-overlay"></div>
-          <div class="card-body">
-            <p class="card-text">
-              <b><%=listing.title %></b>
-              <br />
-              &#8377;<%= listing.price.toLocaleString("en-IN") %> / night
-
-            </p>
+        <div
+          class="grid grid-cols-4 gap-4 col-md-4 lg:col-4 listing-card"
+          data-id="<%= listing._id %>"
+          data-category="<%= listing.category %>"
+        >
+          <div class="card">
+            <img
+              src="<%= listing.image.url %>"
+              class="card-img-top"
+              alt="listing_image"
+              style="height: 20rem"
+            />
+            <div class="card-body">
+              <p class="card-text" style="margin: 10px">
+                <b><%=listing.title %></b>
+                <br />
+                <%=listing.category%>
+                <br />
+                &#8377;<%= listing.price.toLocaleString("en-IN") %> / night
+                <i class="tax-info">&nbsp;&nbsp;+18% GST</i>
+              </p>
+            </div>
           </div>
-        
         </div>
       </a>
       <% } %>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      let priceToggle = document.getElementById("flexSwitchCheckDefault");
+      priceToggle.addEventListener("click", () => {
+        let taxInfo = document.getElementsByClassName("tax-info");
+        for (let info of taxInfo) {
+          if (info.style.display != "inline") info.style.display = "inline";
+          else info.style.display = "none";
+        }
+      });
+
+      let filterToggle = document.getElementById("filterToggle");
+      let filterCollapse = document.getElementById("filterCollapse");
+      filterToggle.addEventListener("click", () => {
+        let isExpanded = filterCollapse.classList.contains("show");
+        if (isExpanded) {
+          filterCollapse.classList.remove("show");
+        } else {
+          filterCollapse.classList.add("show");
+        }
+      });
+
+      let allListingsArray = [];
+      let globalArray = [];
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const listings = document.getElementsByClassName("listing-card");
+        for (let listing of listings) {
+          allListingsArray.push(listing);
+        }
+        globalArray = [...allListingsArray];
+        displayListings(globalArray);
+      });
+
+      let filterbtns = document.getElementsByClassName("filter");
+
+      for (let i = 0; i < filterbtns.length; i++) {
+        filterbtns[i].addEventListener("click", () => {
+          const selectedCategory = filterbtns[i].querySelector("p").innerText;
+
+          globalArray = allListingsArray.filter(
+            (listing) => listing.dataset.category === selectedCategory
+          );
+
+          displayListings(globalArray);
+
+          console.log("Global Array after filtering:", globalArray);
+        });
+      }
+
+      // Function to display listings
+      function displayListings(listingsArray) {
+        const listingsContainer = document.querySelector(".all-listings");
+
+        // Clear all existing listings
+        while (listingsContainer.firstChild) {
+          listingsContainer.removeChild(listingsContainer.firstChild);
+        }
+
+        // Create rows and add listings as columns
+        let rowDiv = document.createElement("div");
+        rowDiv.classList.add("row"); // Create the row
+
+        listingsArray.forEach((listing, index) => {
+          // Create the column div for each listing card
+          const colDiv = document.createElement("div");
+          colDiv.classList.add(
+            "col-12",
+            "col-md-6",
+            "col-lg-4",
+            "mb-4",
+            "w-[10rem]"
+          );
+
+          // Create the anchor element and add listing to it
+          const listingLink = document.createElement("a");
+          listingLink.href = `/listings/${listing.dataset.id}`;
+          listingLink.classList.add("listing-link");
+
+          // Append the listing card inside the column div
+          listingLink.appendChild(listing);
+          colDiv.appendChild(listingLink);
+
+          // Append the column to the current row
+          rowDiv.appendChild(colDiv);
+
+          // For every 3 items, create a new row after the third card
+          if ((index + 1) % 3 === 0) {
+            listingsContainer.appendChild(rowDiv);
+            rowDiv = document.createElement("div");
+            rowDiv.classList.add("row");
+          }
+        });
+
+        // Append the last row if it contains items
+        if (rowDiv.childElementCount > 0) {
+          listingsContainer.appendChild(rowDiv);
+        }
+      }
+    </script>
   </body>
 </html>
