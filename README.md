@@ -12,10 +12,15 @@ Deletion of reviews requires authorization.
 ![330537128-784c23cb-aedf-4a6b-a7c8-eeb95a985f6b](https://github.com/user-attachments/assets/10ad34c5-60c1-45ef-a6bb-60cc4e1ed97f)
 ![330537151-90a1eb20-f5e0-4229-a357-0c28ac8ddf95](https://github.com/user-attachments/assets/222abe31-cd67-484e-9086-4ef9200291a3)
 Various features of WANDERLUST
+
 1)Session: This feature will create an individual session for each user and enable the user to create his/her own listings and reviews and provides them with authority over the listings.
+
 2)Image Upload: This feature enables the user to upload an image for his/her desktop.
+
 3)Error Handling (Try Catch/WrapAsync/ExpressError) : Instant error handling features using middlewares are present in WANDERLUST which provides a detailed and informative way to interact with the user without hampering experience.
+
 4)Login/Signup:Passport authentication and authorization.Usage of hashing and salting for data security.
+
 5)Server/Client Schema Validation
 Explore WANDERLUST! Share your thoughts.☺️ ☺️
 
