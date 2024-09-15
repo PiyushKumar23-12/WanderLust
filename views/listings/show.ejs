@@ -13,11 +13,13 @@
       <div class="col-8 offset-2">
         <br />
         <h3><%= listing.title %></h3>
+        <br />
+        <h3><%= listing.category %></h3>
       </div>
       <div class="card col-6 offset-2 show-card listing-card">
         <br />
         <img
-          src="<%= listing.image %>"
+          src="<%= listing.image.url %>"
           class="card-img-top show-img"
           alt="listing_image"
         />
@@ -46,7 +48,18 @@
         </form>
       </div>
       <%}%>
-
+      <!-- <div class="col-8 offset-3 mb-3">
+        <h4>Where you'll be</h4>
+        <iframe
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCSLnNNDEEyH58e8WZXOa7jcvYAOak6F-g&q=<%= encodeURIComponent(listing.location) %>,<%= encodeURIComponent(listing.country) %>"
+          width="600"
+          height="450"
+          style="border: 0"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div> -->
       <div class="col-8 offset-3 mb-3">
         <hr />
         <% if(currUser){%>
@@ -68,15 +81,40 @@
                 checked
                 aria-label="No rating."
               />
-              <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+              <input
+                type="radio"
+                id="first-rate1"
+                name="review[rating]"
+                value="1"
+              />
               <label for="first-rate1" title="Terrible">1 star</label>
-              <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+              <input
+                type="radio"
+                id="first-rate2"
+                name="review[rating]"
+                value="2"
+              />
               <label for="first-rate2" title="Not good">2 stars</label>
-              <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+              <input
+                type="radio"
+                id="first-rate3"
+                name="review[rating]"
+                value="3"
+              />
               <label for="first-rate3" title="Average">3 stars</label>
-              <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+              <input
+                type="radio"
+                id="first-rate4"
+                name="review[rating]"
+                value="4"
+              />
               <label for="first-rate4" title="Very good">4 stars</label>
-              <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+              <input
+                type="radio"
+                id="first-rate5"
+                name="review[rating]"
+                value="5"
+              />
               <label for="first-rate5" title="Amazing">5 stars</label>
             </fieldset>
           </div>
@@ -104,8 +142,11 @@
           <div class="card col-5 mb-3 ms-3">
             <div class="card-body">
               <h5 class="card-title">@<%= review.author.username%></h5>
-              <p class="starability-result card-text" data-rating="3">
-                Rated: <%= review.rating %> stars
+              <p
+                class="starability-result card-text"
+                data-rating="<%= review.rating %>"
+              >
+                stars
               </p>
               <p class="card-text"><%= review.comment %></p>
             </div>
